@@ -1,5 +1,5 @@
 {
-  "name": "nuxt",
+  "name": "todoAPI",
   "version": "1.0.0",
   "description": "Nuxtjs with Express and MongoDB",
   "main": "app.js",
