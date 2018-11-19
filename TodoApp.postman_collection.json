@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "c04dc40b-a042-4ab8-b2b0-4bf951e3be07",
+		"name": "TodoApp",
+		"description": "All the requests of my todo's app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "secure",
+			"item": [
+				{
+					"name": "Logoff",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/secure/logoff",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"secure",
+								"logoff"
+							]
+						},
+						"description": "route to logoff."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "bevilaqua",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/secure/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"secure",
+								"login"
+							]
+						},
+						"description": "Route to login."
+					},
+					"response": []
+				}
+			],
+			"description": "Secure routes.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "16f3053e-0588-4574-8094-95ecac3137ff",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "daeb2e76-d1cf-41ca-9418-24a86a9c6ba7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "author",
+			"item": [
+				{
+					"name": "Find all authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/author",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"author"
+							]
+						},
+						"description": "Find all authors route."
+					},
+					"response": []
+				},
+				{
+					"name": "Find one author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/author/find/5bf2e7a92b9d0d1014f93c7c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"author",
+								"find",
+								"5bf2e7a92b9d0d1014f93c7c"
+							]
+						},
+						"description": "fin one author route."
+					},
+					"response": []
+				},
+				{
+					"name": "Create author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Bruce Wayne",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "i am not batman.",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1939-05-25",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "iambatman@iamlying.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "batsecretpassword",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Brucetman",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/author/create",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"author",
+								"create"
+							]
+						},
+						"description": "create an author route."
+					},
+					"response": []
+				},
+				{
+					"name": "Update author",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Clark Kent",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1985-02-29",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "clarkman",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "supersecrecpassword",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "imsuperman@iamlying.com",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "I am not superman.",
+									"type": "text"
+								},
+								{
+									"key": "_id",
+									"value": "5bf2e803df99bb0aa826d226",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/author/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"author",
+								"update"
+							]
+						},
+						"description": "Update author route."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/author/delete/5bf2e831e882e1140c529b89",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"author",
+								"delete",
+								"5bf2e831e882e1140c529b89"
+							]
+						},
+						"description": "Delete author route."
+					},
+					"response": []
+				}
+			],
+			"description": "Author routes."
+		},
+		{
+			"name": "todo",
+			"item": [
+				{
+					"name": "Find all todo's",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/todo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo"
+							]
+						},
+						"description": "Find all todo's."
+					},
+					"response": []
+				},
+				{
+					"name": "Find one todo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/todo/find/5bf2aa4f25db0a20d05c6fb9",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo",
+								"find",
+								"5bf2aa4f25db0a20d05c6fb9"
+							]
+						},
+						"description": "Find one todo route."
+					},
+					"response": []
+				},
+				{
+					"name": "Create todo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Post 2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description of the post 2",
+									"type": "text"
+								},
+								{
+									"key": "done",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "5bf29f1f8e8f5811b4b1789d",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/todo/create",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo",
+								"create"
+							]
+						},
+						"description": "Create todo route."
+					},
+					"response": []
+				},
+				{
+					"name": "Update todo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Post 23",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description of the post 23",
+									"type": "text"
+								},
+								{
+									"key": "done",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "5bf29f1f8e8f5811b4b1789d",
+									"type": "text"
+								},
+								{
+									"key": "_id",
+									"value": "5bf2efb49be72b1030906ddc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/todo/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo",
+								"update"
+							]
+						},
+						"description": "Update todo route."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete todo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "localhost:3000/todo/delete/5bf2efb49be72b1030906ddc",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo",
+								"delete",
+								"5bf2efb49be72b1030906ddc"
+							]
+						},
+						"description": "Delete todo route."
+					},
+					"response": []
+				}
+			],
+			"description": "todo's route"
+		}
+	]
+}
