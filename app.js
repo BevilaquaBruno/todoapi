@@ -9,15 +9,27 @@ var logger = require('morgan');
 var httpErrors = require('http-errors');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var todoRouter = require('./routes/todo');
 var authorRouter = require('./routes/author');
+var secureRouter = require('./routes/secure');
 
 var mongoDB = 'mongodb://localhost/todosAPP';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(session({
+  secret: 'sefortniteforomelhorjogodoanoeumemato',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      secure: false,
+      expires: 600000
+  }
+}));
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -39,7 +51,11 @@ app.use(compression());
 app.use('/', indexRouter);
 app.use('/todo', todoRouter);
 app.use('/author', authorRouter);
+app.use('/secure', secureRouter);
 
+app.use('*', function (req, res, next) {
+  res.json({ error: true, msg: 'Invalid route.' });
+});
 app.use(function (req,res,next) {
   next(httpErrors(404));
 });

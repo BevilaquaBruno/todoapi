@@ -3,7 +3,15 @@ var router = express.Router();
 var todoModel = require('../models/todoModel');
 var validator = require('validator');
 
-router.get('/', function (req, res, next) {
+function isAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+    return next();
+  }else{
+    res.json({ error: false, msg: 'Error: you must be logged in !'});
+  }
+}
+
+router.get('/', isAuthenticated,function (req, res, next) {
   //return all todos
   todoModel.find().populate('author', '-password -email').exec((err, todos) => {
     if (err) {
@@ -14,7 +22,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/find/:_id', function (req, res, next) {
+router.get('/find/:_id', isAuthenticated,function (req, res, next) {
   if (req.params._id) {
     todoModel.findById(req.params._id).populate('author', '-password -email').exec((err, todo) =>{
       if (err) {
@@ -28,7 +36,7 @@ router.get('/find/:_id', function (req, res, next) {
   }
 });
 
-router.delete('/delete/:_id', function (req, res, next) {
+router.delete('/delete/:_id', isAuthenticated,function (req, res, next) {
   if (req.params._id) {
     todoModel.findByIdAndDelete(req.params._id,(err, todo) => {
       if (err) {
@@ -42,7 +50,7 @@ router.delete('/delete/:_id', function (req, res, next) {
   }
 });
 
-router.put('/update', function (req, res, next) {
+router.put('/update', isAuthenticated,function (req, res, next) {
   if (!req.body.name || !req.body.description || !req.body.done ||
     req.body.name == '' || req.body.description == '' || !req.body._id) {
     res.json({ error: true, msg: 'Error on update todo, invalid data.', todos: null });
@@ -59,7 +67,7 @@ router.put('/update', function (req, res, next) {
   }
 });
 
-router.post('/create', function (req, res, next) {
+router.post('/create', isAuthenticated,function (req, res, next) {
   if (!req.body.name || !req.body.description || !req.body.done ||
     req.body.name == '' || req.body.description == '' || !req.body.author) {
     res.json({ error: true, msg: 'Error on create todo, invalid data.', todos: null });
@@ -71,6 +79,10 @@ router.post('/create', function (req, res, next) {
       res.json({ error: true, msg: 'Error on create todo. Error: ' + err, todos: null });
     });
   }
+});
+
+router.all('*', function (req, res, next) {
+  res.json({ error: true, msg: 'Invalid route.' });
 });
 
 module.exports = router;
