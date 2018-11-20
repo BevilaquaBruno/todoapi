@@ -1,7 +1,7 @@
 const compression = require('compression');
 const express= require('express');
 const app = express();
-const port = 4000;
+const port = 3000;
 
 var helmet = require('helmet');
 var cookieParser = require('cookie-parser');
@@ -11,7 +11,6 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var indexRouter = require('./routes/index');
 var todoRouter = require('./routes/todo');
 var authorRouter = require('./routes/author');
 var secureRouter = require('./routes/secure');
@@ -21,25 +20,25 @@ mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(session({
-  secret: 'sefortniteforomelhorjogodoanoeumemato',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-      secure: false,
-      expires: 600000
-  }
-}));
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.use(bodyParser.json());
+// app.use(session({
+//   secret: 'sefortniteforomelhorjogodoanoeumemato',
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//       secure: false,
+//       expires: 600000
+//   }
+// }));
 
 app.use(helmet());
 
 app.use(logger('dev'));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -48,14 +47,13 @@ app.use(cookieParser());
 
 app.use(compression());
 
-app.use('/', indexRouter);
 app.use('/todo', todoRouter);
 app.use('/author', authorRouter);
 app.use('/secure', secureRouter);
-
 app.use('*', function (req, res, next) {
   res.json({ error: true, msg: 'Invalid route.' });
 });
+
 app.use(function (req,res,next) {
   next(httpErrors(404));
 });

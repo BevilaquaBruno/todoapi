@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c04dc40b-a042-4ab8-b2b0-4bf951e3be07",
+		"_postman_id": "e479813d-53b1-410d-b6ba-5c1e0d4e5765",
 		"name": "TodoApp",
 		"description": "All the requests of my todo's app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -23,7 +23,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"secure",
 								"logoff"
@@ -65,13 +65,37 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"secure",
 								"login"
 							]
 						},
 						"description": "Route to login."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/secure/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"secure",
+								"verify"
+							]
+						},
+						"description": "Verify login route."
 					},
 					"response": []
 				}
@@ -117,7 +141,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"author"
 							]
@@ -140,7 +164,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"author",
 								"find",
@@ -203,7 +227,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"author",
 								"create"
@@ -270,7 +294,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"author",
 								"update"
@@ -294,7 +318,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"author",
 								"delete",
@@ -325,7 +349,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"todo"
 							]
@@ -348,7 +372,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"todo",
 								"find",
@@ -401,7 +425,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"todo",
 								"create"
@@ -458,7 +482,7 @@
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"todo",
 								"update"
@@ -480,13 +504,16 @@
 								"type": "text"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "localhost:3000/todo/delete/5bf2efb49be72b1030906ddc",
 							"host": [
 								"localhost"
 							],
-							"port": "4000",
+							"port": "3000",
 							"path": [
 								"todo",
 								"delete",

@@ -1,14 +1,17 @@
 const express = require('express');
 var router = express.Router();
 var todoModel = require('../models/todoModel');
+var authorModel = require('../models/authorModel');
 var validator = require('validator');
 
 function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }else{
-    res.json({ error: false, msg: 'Error: you must be logged in !'});
-  }
+  authorModel.find({ token: req.headers.authentication }).then(function (user) {
+    if (user.lenght == 0) {
+      res.json({ error: true, msg: 'Error: you must be logged in !'});
+    }else{
+      next();
+    }
+  });
 }
 
 router.get('/', isAuthenticated,function (req, res, next) {
@@ -79,10 +82,6 @@ router.post('/create', isAuthenticated,function (req, res, next) {
       res.json({ error: true, msg: 'Error on create todo. Error: ' + err, todos: null });
     });
   }
-});
-
-router.all('*', function (req, res, next) {
-  res.json({ error: true, msg: 'Invalid route.' });
 });
 
 module.exports = router;

@@ -1,19 +1,22 @@
 const express = require('express');
 var router = express.Router();
 var authorModel = require('../models/authorModel');
+var hash = require('object-hash');
 
 function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }else{
-    res.json({ error: true, msg: 'Error: you must be logged in !'});
-  }
+  authorModel.find({ token: req.headers.authentication }).then(function (user) {
+    if (user.length == 0) {
+      res.json({ error: true, msg: 'Error: you must be logged in !'});
+    }else{
+      next();
+    }
+  });
 }
 
 router.post('/login', function(req, res, next){
   if (!req.body.username || !req.body.password ||
       req.body.username == '' || req.body.password == '') {
-    res.json({ error: true, msg: 'Error on login, verify your username and password.' });
+    res.json({ error: true, msg: 'Error on login, verify your username and password.'});
   }else{
     authorModel.findOne({ username: req.body.username }, function (err, user) {
       if (err || user == null) {
@@ -24,10 +27,13 @@ router.post('/login', function(req, res, next){
             res.json({ error: true, msg: 'Error on login, server error, try again later.' });
           }else{
             if (isMatch) {
-              req.session.user = user;
-              delete req.session.user.password;
-              req.session.user.logged = true;
-              res.json({ error: false, msg: 'You are logged in now !' });
+              authorModel.findOneAndUpdate({ _id: user._id }, { $set:{ token: hash(user.username+user.email+user.description) }}).then(function (user2) {
+                if (user2) {
+                  res.json({ error: false, msg: 'You are logged in now !' , user: { token: hash(user2.username+user2.email+user2.description), username: user2.username, email: user2.email, name: user2.name, description: user2.description, birthday: user2.birthday, logged: user2.logged} });
+                }else{
+                  res.json({ error: false, msg: 'Erro on login!' , user: null});
+                }
+              });
             }else{
               res.json({ error: true, msg: 'Error on login, username or password does not match.' });
             }
@@ -38,18 +44,23 @@ router.post('/login', function(req, res, next){
   }
 });
 
-router.get('/logoff', isAuthenticated ,function (req, res, next) {
-  req.session.destroy(function (err) {
-    if (err) {
-      res.json({ error: true, msg: 'Error on logoff, Error: '+ err });
+router.get('/logout', isAuthenticated ,function (req, res, next) {
+  authorModel.findOneAndUpdate({ token: req.headers.authentication }, { $set: { token: 'no token' }}).then(function (user) {
+    if (!user) {
+      res.json({ error: true, msg: 'Error on logout, Error: ' + user});
     }else{
-      res.json({ error: false, msg: 'You are logged off now !' });
+      res.json({ error: false, msg: 'You are logged off now !'});
     }
-  })
+  });
 });
 
-router.all('*', function (req, res, next) {
-  res.json({ error: true, msg: 'Invalid route.' });
-});
-
+router.get('/verify',isAuthenticated, function (req, res, next) {
+  authorModel.find({ token: req.headers.authentication }).then(function (user) {
+    if (user.length == 0) {
+      res.json({ error: true, msg: 'Error: you must be logged in !', user: null});
+    }else{
+      res.json({ error: false, msg: 'You are logged !', user: user});
+    }
+  });
+})
 module.exports = router;
