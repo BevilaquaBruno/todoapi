@@ -15,7 +15,8 @@ var todoRouter = require('./routes/todo');
 var authorRouter = require('./routes/author');
 var secureRouter = require('./routes/secure');
 
-var mongoDB = 'mongodb://localhost/todosAPP';
+//var mongoDB = 'mongodb://localhost/todosAPP';
+var mongoDB = 'mongodb://bevilaqua:Ilovelana05@ds111244.mlab.com:11244/todosapi';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
