@@ -8,8 +8,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var httpErrors = require('http-errors');
 var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var session = require('express-session');
 
 var todoRouter = require('./routes/todo');
 var authorRouter = require('./routes/author');
@@ -20,16 +18,6 @@ var mongoDB = 'mongodb://localhost/todosAPP';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-// app.use(session({
-//   secret: 'sefortniteforomelhorjogodoanoeumemato',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//       secure: false,
-//       expires: 600000
-//   }
-// }));
 
 app.use(helmet());
 
