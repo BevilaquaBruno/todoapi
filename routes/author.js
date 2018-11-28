@@ -5,7 +5,7 @@ var validator = require('validator');
 
 function isAuthenticated(req, res, next) {
   authorModel.find({ token: req.headers.authentication }).then(function (user) {
-    if (user.lenght == 0) {
+    if (user.length == 0) {
       res.json({ error: true, msg: 'Error: you must be logged in !'});
     }else{
       next();
@@ -13,8 +13,8 @@ function isAuthenticated(req, res, next) {
   });
 }
 
-router.get('/', isAuthenticated,function (req, res, next) {
-  authorModel.find().select('-password').exec((err, author)=> {
+router.get('/', isAuthenticated, function (req, res, next) {
+  authorModel.find().select('-password -token -updatedAt').exec((err, author)=> {
     if (err) {
       res.json({ error: false, msg: 'Error on getting all authors. Error: ' + err, authors: null });
     }else{
@@ -25,7 +25,7 @@ router.get('/', isAuthenticated,function (req, res, next) {
 
 router.get('/find/:_id', isAuthenticated,function (req, res, next){
   if (req.params._id) {
-    authorModel.findById(req.params._id,'-password').exec((err, author)=>{
+    authorModel.findById(req.params._id,'-password -token -updatedAt').exec((err, author)=>{
       if (err) {
         res.json({ error: false, msg: 'Error on getting author. Error: ' + err, authors: null });
       }else{
