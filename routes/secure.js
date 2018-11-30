@@ -27,9 +27,9 @@ router.post('/login', function(req, res, next){
             res.json({ error: true, msg: 'Error on login, server error, try again later.' });
           }else{
             if (isMatch) {
-              authorModel.findOneAndUpdate({ _id: user._id }, { $set:{ token: hash(user.username+user.email+user.description) }}).then(function (user2) {
+              authorModel.findOneAndUpdate({ _id: user._id }, { $set:{ token: hash(user.username+user.email+user.description) }}).select('-password').then(function (user2) {
                 if (user2) {
-                  res.json({ error: false, msg: 'You are logged in now !' , user: { token: hash(user2.username+user2.email+user2.description), username: user2.username, email: user2.email, name: user2.name, description: user2.description, birthday: user2.birthday, logged: user2.logged} });
+                  res.json({ error: false, msg: 'You are logged in now !' , user: user2});
                 }else{
                   res.json({ error: false, msg: 'Erro on login!' , user: null});
                 }

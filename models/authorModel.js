@@ -9,7 +9,8 @@ const AuthorSchema = mongoose.Schema({
   username: { type: String, required: true, index: { unique: true } },
   email: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
-  token: { type: String, default: 'no token' }
+  token: { type: String, default: 'no token' },
+  admin: { type: Boolean, default: false }
 }, {
 	timestamps: true
 });
