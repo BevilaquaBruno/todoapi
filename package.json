@@ -4,7 +4,7 @@
   "description": "Nuxtjs with Express and MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node ./bin/www",
     "nodemon": "nodemon"
   },
   "author": "Bruno Bevilaqua",

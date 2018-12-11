@@ -47,8 +47,4 @@ app.use(function (req,res,next) {
   next(httpErrors(404));
 });
 
-app.listen(port, function(){
-  console.log('Server listen on port '+ port +'!');
-});
-
 module.exports = app

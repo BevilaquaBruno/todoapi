@@ -29,6 +29,7 @@ router.get('/find/:_id', isAuthenticated,function (req, res, next){
       if (err) {
         res.json({ error: false, msg: 'Error on getting author. Error: ' + err, authors: null });
       }else{
+        //new Date(author.birthday).getFullYear() + '-' + ((new Date(author.birthday).getMonth()<10)?'0'+new Date(author.birthday).getMonth():new Date(author.birthday).getMonth()) + '-' + ((new Date(author.birthday).getDate()<10)?'0'+new Date(author.birthday).getDate() : new Date(author.birthday).getDate());
         res.json({ error: false, msg: 'Success on getting author.', authors: author });
       }
     });
