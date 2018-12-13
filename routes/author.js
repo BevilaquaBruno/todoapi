@@ -52,14 +52,14 @@ router.delete('/delete/:_id', isAuthenticated,function (req, res, next) {
       }
     });
   }else{
-    res.json({ error: false, msg: 'Error on delete author, id is undefined.', authors: null });
+    res.json({ error: true, msg: 'Error on delete author, id is undefined.', authors: null });
   }
 });
 
 router.put('/update', isAuthenticated,function (req, res, next) {
   var today = new Date();
   if (!req.body.name || !req.body.birthday || !req.body._id ||
-    !req.body.username || !req.body.email ||
+    !req.body.username || !req.body.email || !req.body.admin ||
     req.body._id == '' || req.body.name == '' || req.body.birthday == '' || !validator.isEmail(req.body.email) ||
     validator.isBefore(today.toString(), req.body.birthday) ||
     req.body.username == '' || req.body.email == '') {
@@ -71,6 +71,7 @@ router.put('/update', isAuthenticated,function (req, res, next) {
       username: req.body.username,
       birthday: req.body.birthday,
       description: req.body.description,
+      admin: req.body.admin,
       email: req.body.email } }, (err, author) =>{
         if (err) {
           res.json({ error: true, msg: 'Error on update author. Error: ' + err, authors: null });
@@ -87,7 +88,7 @@ router.post('/create', isAuthenticated,function (req, res, next) {
     !req.body.username  || !req.body.password  || !req.body.email ||
     req.body.name == '' || validator.isBefore(today.toString(), req.body.birthday) || !validator.isEmail(req.body.email) ||
     req.body.username == '' || req.body.password == '' || req.body.email == '') {
-    res.json({ error: false, msg: 'Error on create author, invalid data.', authors: null });
+    res.json({ error: true, msg: 'Error on create author, invalid data. Verify your birthday date.', authors: null });
   }else{
     delete req.body._id;
     var author = new authorModel(req.body);

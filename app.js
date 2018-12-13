@@ -9,6 +9,13 @@ var logger = require('morgan');
 var httpErrors = require('http-errors');
 var mongoose = require('mongoose');
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
+  next();
+});
+
 var todoRouter = require('./routes/todo');
 var authorRouter = require('./routes/author');
 var secureRouter = require('./routes/secure');
@@ -22,12 +29,6 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 app.use(helmet());
 
 app.use(logger('dev'));
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authentication");
-  next();
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
